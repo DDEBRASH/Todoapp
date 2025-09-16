@@ -1,0 +1,30 @@
+# Исключаем ненужные файлы из Docker образа
+.git
+.gitignore
+README.md
+Dockerfile
+.dockerignore
+*.log
+.env
+.env.local
+env.example
+
+# IDE
+.vscode/
+.idea/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Build artifacts
+todoapp
+*.exe
+
+# Database
+*.db
+*.sqlite
+
+# Temporary files
+*.tmp
+*.temp
