@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Email Verification - Todo App</title>
+  <style>
+    body { font-family: sans-serif; background: #f7f7f7; display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; }
+    .container { background: #fff; padding: 2rem; border-radius: 8px; box-shadow: 0 1px 6px rgba(0,0,0,.08); text-align: center; max-width: 400px; }
+    .success { color: #28a745; }
+    .error { color: #dc3545; }
+    .loading { color: #6c757d; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>Email Verification</h2>
+    <div id="status" class="loading">Verifying your email...</div>
+    <div id="message"></div>
+    <div style="margin-top: 1rem;">
+      <a href="/">Back to Login</a>
+    </div>
+  </div>
+
+  <script>
+    async function verifyEmail() {
+      const urlParams = new URLSearchParams(window.location.search);
+      const token = urlParams.get('token');
+      
+      if (!token) {
+        document.getElementById('status').className = 'error';
+        document.getElementById('status').textContent = 'Invalid verification link';
+        return;
+      }
+
+      try {
+        const response = await fetch(`/api/auth/verify-email?token=${token}`);
+        const data = await response.json();
+        
+        if (response.ok) {
+          document.getElementById('status').className = 'success';
+          document.getElementById('status').textContent = 'Email verified successfully!';
+          document.getElementById('message').innerHTML = 'You can now <a href="/">login to your account</a>.';
+        } else {
+          document.getElementById('status').className = 'error';
+          document.getElementById('status').textContent = 'Verification failed';
+          document.getElementById('message').textContent = data.message || 'Invalid or expired token';
+        }
+      } catch (error) {
+        document.getElementById('status').className = 'error';
+        document.getElementById('status').textContent = 'Network error';
+        document.getElementById('message').textContent = 'Please try again later';
+      }
+    }
+
+    verifyEmail();
+  </script>
+</body>
+</html>
+

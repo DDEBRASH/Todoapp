@@ -1,0 +1,4 @@
+ALTER TABLE users
+    ADD COLUMN failed_attempts INT NOT NULL DEFAULT 0,
+    ADD COLUMN is_blocked BOOLEAN NOT NULL DEFAULT FALSE,
+    ADD COLUMN email TEXT;
