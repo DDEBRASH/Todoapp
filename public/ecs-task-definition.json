@@ -1,0 +1,96 @@
+{
+  "family": "todoapp",
+  "networkMode": "awsvpc",
+  "requiresCompatibilities": ["FARGATE"],
+  "cpu": "256",
+  "memory": "512",
+  "executionRoleArn": "arn:aws:iam::YOUR_AWS_ACCOUNT_ID:role/ecsTaskExecutionRole",
+  "containerDefinitions": [
+    {
+      "name": "todoapp",
+      "image": "YOUR_AWS_ACCOUNT_ID.dkr.ecr.us-east-1.amazonaws.com/todoapp:latest",
+      "portMappings": [
+        {
+          "containerPort": 8080,
+          "protocol": "tcp"
+        }
+      ],
+      "environment": [
+        {
+          "name": "APP_PORT",
+          "value": "8080"
+        },
+        {
+          "name": "PG_HOST",
+          "value": "todoapp-db.ccp6eum4wk5i.us-east-1.rds.amazonaws.com"
+        },
+        {
+          "name": "PG_PORT",
+          "value": "5432"
+        },
+        {
+          "name": "PG_USER",
+          "value": "postgres"
+        },
+        {
+          "name": "PG_DB",
+          "value": "todoapp"
+        },
+        {
+          "name": "PG_SSLMODE",
+          "value": "require"
+        },
+        {
+          "name": "JWT_SECRET",
+          "value": "1xFZvo0uC9wi6wcy35yuai3eG2nt5ngR8zB56dwpczc="
+        },
+        {
+          "name": "ADMIN_TOKEN",
+          "value": "admin_12345_secret"
+        },
+        {
+          "name": "SMTP_HOST",
+          "value": "smtp.gmail.com"
+        },
+        {
+          "name": "SMTP_PORT",
+          "value": "587"
+        },
+        {
+          "name": "SMTP_USER",
+          "value": "your_email@gmail.com"
+        },
+        {
+          "name": "SMTP_FROM",
+          "value": "your_email@gmail.com"
+        },
+        {
+          "name": "APP_BASE_URL",
+          "value": "https://YOUR_ALB_DNS_NAME"
+        },
+        {
+          "name": "LOGIN_MAX_FAIL",
+          "value": "4"
+        }
+      ],
+      "secrets": [
+        {
+          "name": "PG_PASS",
+          "valueFrom": "arn:aws:secretsmanager:us-east-1:YOUR_AWS_ACCOUNT_ID:secret:todoapp/db-password"
+        },
+        {
+          "name": "SMTP_PASS",
+          "valueFrom": "arn:aws:secretsmanager:us-east-1:YOUR_AWS_ACCOUNT_ID:secret:todoapp/smtp-password"
+        }
+      ],
+      "logConfiguration": {
+        "logDriver": "awslogs",
+        "options": {
+          "awslogs-group": "/ecs/todoapp",
+          "awslogs-region": "us-east-1",
+          "awslogs-stream-prefix": "ecs"
+        }
+      }
+    }
+  ]
+}

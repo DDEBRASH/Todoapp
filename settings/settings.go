@@ -88,8 +88,8 @@ func getEnvAsInt(key string, defaultValue int) int {
 // validateRequiredVars проверяет обязательные переменные окружения
 func validateRequiredVars() {
 	required := map[string]string{
-		"PG_PASS":    PG_PASS,
-		"JWT_SECRET": JWT_SECRET,
+		"PG_PASS":     PG_PASS,
+		"JWT_SECRET":  JWT_SECRET,
 		"ADMIN_TOKEN": ADMIN_TOKEN,
 	}
 

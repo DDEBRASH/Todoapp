@@ -355,25 +355,6 @@ func (q *Queries) GetUserTeamProjects(ctx context.Context, userID int32) ([]GetU
 	return items, nil
 }
 
-const isUserMemberOfProject = `-- name: IsUserMemberOfProject :one
-SELECT EXISTS(
-    SELECT 1 FROM team_project_members 
-    WHERE project_id = $1 AND user_id = $2
-) as is_member
-`
-
-type IsUserMemberOfProjectParams struct {
-	ProjectID int32 `db:"project_id" json:"project_id"`
-	UserID    int32 `db:"user_id" json:"user_id"`
-}
-
-func (q *Queries) IsUserMemberOfProject(ctx context.Context, arg IsUserMemberOfProjectParams) (bool, error) {
-	row := q.db.QueryRowContext(ctx, isUserMemberOfProject, arg.ProjectID, arg.UserID)
-	var is_member bool
-	err := row.Scan(&is_member)
-	return is_member, err
-}
-
 const setTeamTaskDone = `-- name: SetTeamTaskDone :one
 UPDATE team_tasks 
 SET done = $2, updated_at = CURRENT_TIMESTAMP

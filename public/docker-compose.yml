@@ -1,0 +1,63 @@
+services:
+  # PostgreSQL база данных
+  postgres:
+    image: postgres:15-alpine
+    container_name: todoapp_postgres
+    environment:
+      POSTGRES_DB: todoapp
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-1234}
+    ports:
+      - "5433:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./setup_online_db.sql:/docker-entrypoint-initdb.d/init.sql
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # Go приложение (с репликами)
+  todoapp:
+    build: .
+    ports:
+      - "8080"  # Внутренний порт
+    environment:
+      APP_PORT: 8080
+      PG_HOST: postgres
+      PG_PORT: 5432
+      PG_USER: postgres
+      PG_PASS: ${POSTGRES_PASSWORD:-1234}
+      PG_DB: todoapp
+      PG_SSLMODE: disable
+      JWT_SECRET: ${JWT_SECRET:-1xFZvo0uC9wi6wcy35yuai3eG2nt5ngR8zB56dwpczc=}
+      ADMIN_TOKEN: ${ADMIN_TOKEN:-admin_12345_secret}
+      SMTP_HOST: smtp.gmail.com
+      SMTP_PORT: 587
+      SMTP_USER: ${SMTP_USER:-test.t0d0.dimash@gmail.com}
+      SMTP_PASS: ${SMTP_PASS:-nres wobi oouf ecvb}
+      SMTP_FROM: ${SMTP_FROM:-test.t0d0.dimash@gmail.com}
+      APP_BASE_URL: ${APP_BASE_URL:-http://localhost:3000}
+      LOGIN_MAX_FAIL: 4
+    depends_on:
+      postgres:
+        condition: service_healthy
+    restart: unless-stopped
+    deploy:
+      replicas: 2  # 2 реплики приложения
+
+  # Nginx Load Balancer
+  nginx:
+    image: nginx:stable-alpine
+    container_name: todoapp_nginx
+    ports:
+      - "3000:80"  # Внешний порт 3000 → внутренний 80
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+    depends_on:
+      - todoapp
+    restart: unless-stopped
+
+volumes:
+  postgres_data:

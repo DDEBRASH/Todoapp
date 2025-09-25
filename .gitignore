@@ -1,27 +1,37 @@
-# Environment variables
+# Private folder with sensitive data
+private/
+
+# Environment files
 .env
 .env.local
 .env.production
 
-# Logs
-*.log
-
-# IDE
+# IDE files
 .vscode/
 .idea/
+*.swp
+*.swo
 
-# OS
+# OS files
 .DS_Store
 Thumbs.db
 
-# Build
+# Logs
+*.log
+logs/
+
+# Temporary files
+*.tmp
+*.temp
+
+# Build artifacts
+dist/
+build/
+
+# Go specific
 todoapp
 *.exe
 
 # Database
 *.db
 *.sqlite
-
-# Temporary files
-*.tmp
-*.temp

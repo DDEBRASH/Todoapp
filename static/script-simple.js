@@ -721,7 +721,7 @@ document.addEventListener('DOMContentLoaded', function() {
             showNotification('Ошибка удаления задачи', 'error');
         }
     }
-    
+
     // ADD TEAM TASK
     async function addTeamTask() {
         const title = document.getElementById('team-task-input').value.trim();

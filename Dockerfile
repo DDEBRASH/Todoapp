@@ -12,13 +12,13 @@ RUN go mod download
 COPY . .
 
 # Собираем приложение
-RUN go build -o todoapp main.go
+RUN go build -ldflags="-s -w" -o todoapp main.go
 
 # Создаем финальный образ
 FROM alpine:latest
 
 # Устанавливаем необходимые пакеты
-RUN apk --no-cache add ca-certificates tzdata
+RUN apk --no-cache add ca-certificates tzdata dumb-init
 
 # Создаем пользователя для безопасности
 RUN adduser -D -s /bin/sh appuser
@@ -41,5 +41,6 @@ USER appuser
 # Открываем порт
 EXPOSE 8080
 
-# Запускаем приложение
+# Запускаем приложение с dumb-init
+ENTRYPOINT ["/usr/bin/dumb-init", "--"]
 CMD ["./todoapp"]
