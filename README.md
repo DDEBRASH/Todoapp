@@ -6,11 +6,9 @@ A comprehensive web application built with Go for task management and team colla
 
 ## 🎬 Project Overview Video
 
-> *"Watch the journey of a true task management warrior!"* ⚔️
 
-<video width="800" height="450" controls>
-  <source src="docs/images/overview.mp4" type="video/mp4">
-</video>
+[![TodoApp Demo Video](https://img.youtube.com/vi/1Lrz3E3yPqo/0.jpg)](https://youtu.be/1Lrz3E3yPqo)
+
 
 ## 🎭 Navigation & Documentation
 
@@ -42,7 +40,7 @@ TodoApp is a full-featured task management system that supports:
 - **🐳 Docker Ready** - Containerized for easy deployment (sealed in a scroll!)
 - **☁️ AWS Compatible** - Ready for production deployment (scales like a dragon!)
 
-## 🏯 Project Structure (Your Digital Dojo) ⛩️
+## 🏯 Project Structure
 
 ```
 todoapp/                     # 🎌 Your main training ground
@@ -97,7 +95,7 @@ cp public/env.local .env
 docker-compose up -d
 ```
 
-## 🔐 Security Features (Your Digital Armor) ⚔️
+## 🔐 Security Features 
 ![](https://media1.tenor.com/m/cBMIWdZM-5MAAAAd/tampa-bay-rays-security-guard-security-guard.gif)
 
 - **🔑 JWT Authentication** - Secure token-based auth (
@@ -107,7 +105,7 @@ docker-compose up -d
 - **✅ Input Validation** - SQL injection prevention (your code's immune system!)
 - **🌐 CORS Configuration** - Cross-origin request handling 
 
-## 🌐 API Endpoints (Your Digital Techniques) ⚔️
+## 🌐 API Endpoints 
 
 ![](https://remimercier.com/media/2017/what-is-an-api-remi-mercier.gif)
 
@@ -130,7 +128,7 @@ docker-compose up -d
 - `GET /api/team-projects/my` - Get user projects 
 - `GET /api/team-projects/{id}/tasks` - Get project tasks 
 
-## 🛠️ Technology Stack (Your Arsenal) ⚔️
+## 🛠️ Technology Stack (
 
 
 - **⚔️ Backend**: Go 1.23, Gorilla Mux, SQLC 
